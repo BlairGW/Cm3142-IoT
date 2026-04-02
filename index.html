@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
+
 <body>
 
     <header class="site-header">
@@ -21,18 +23,6 @@
         <section class="section-card">
             <div class="section-header">
                 <h2><span class="icon">🌿</span> Environmental Sensor Data</h2>
-                <div class="time-range-bar">
-                    <span class="time-range-label">Time Range:</span>
-                    <button class="time-btn" data-range="1h">1 Hour</button>
-                    <button class="time-btn" data-range="24h">24 Hours</button>
-                    <button class="time-btn" data-range="7d">7 Days</button>
-                    <button class="time-btn active" data-range="all">All</button>
-                    <span class="filter-separator"></span>
-                    <span class="time-range-label">Location:</span>
-                    <select id="locationSelect" class="location-select">
-                        <option value="all">All Locations</option>
-                    </select>
-                </div>
             </div>
             <div class="section-body">
                 <div class="chart-grid">
@@ -42,33 +32,15 @@
                         <div id="sensorMap"></div>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-header">
-                            <h4>🌡 Temperature</h4>
-                            <div class="chart-meta">
-                                <span class="latest-value" id="tempLatest">—</span>
-                                <span class="status-badge" id="tempStatus">—</span>
-                            </div>
-                        </div>
+                        <h4>🌡 Temperature</h4>
                         <canvas id="temperatureChart"></canvas>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-header">
-                            <h4>💧 Humidity</h4>
-                            <div class="chart-meta">
-                                <span class="latest-value" id="humidityLatest">—</span>
-                                <span class="status-badge" id="humidityStatus">—</span>
-                            </div>
-                        </div>
+                        <h4>💧 Humidity</h4>
                         <canvas id="humidityChart"></canvas>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-header">
-                            <h4>☀️ Brightness</h4>
-                            <div class="chart-meta">
-                                <span class="latest-value" id="brightnessLatest">—</span>
-                                <span class="status-badge" id="brightnessStatus">—</span>
-                            </div>
-                        </div>
+                        <h4>☀️ Brightness</h4>
                         <canvas id="brightnessChart"></canvas>
                     </div>
                 </div>
@@ -81,7 +53,21 @@
                 <h2><span class="icon">🔊</span> Noise Pollution</h2>
             </div>
             <div class="section-body">
-                <p class="placeholder">No data source connected yet.</p>
+                <div class="chart-grid">
+                    <div class="chart-card map-card">
+                        <h4>📍 Sensor Location</h4>
+                        <p class="location-text" id="noiseLocationLabel"><span class="skeleton"></span></p>
+                        <div id="noiseMap"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h4>🔊 Noise Level (dB)</h4>
+                        <canvas id="noiseChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4>📊 Classification</h4>
+                        <canvas id="noiseClassChart"></canvas>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -110,4 +96,5 @@
     <script type="module" src="main.js"></script>
 
 </body>
+
 </html>
