@@ -21,6 +21,18 @@
         <section class="section-card">
             <div class="section-header">
                 <h2><span class="icon">🌿</span> Environmental Sensor Data</h2>
+                <div class="time-range-bar">
+                    <span class="time-range-label">Time Range:</span>
+                    <button class="time-btn" data-range="1h">1 Hour</button>
+                    <button class="time-btn" data-range="24h">24 Hours</button>
+                    <button class="time-btn" data-range="7d">7 Days</button>
+                    <button class="time-btn active" data-range="all">All</button>
+                    <span class="filter-separator"></span>
+                    <span class="time-range-label">Location:</span>
+                    <select id="locationSelect" class="location-select">
+                        <option value="all">All Locations</option>
+                    </select>
+                </div>
             </div>
             <div class="section-body">
                 <div class="chart-grid">
@@ -30,15 +42,33 @@
                         <div id="sensorMap"></div>
                     </div>
                     <div class="chart-card">
-                        <h4>🌡 Temperature</h4>
+                        <div class="chart-card-header">
+                            <h4>🌡 Temperature</h4>
+                            <div class="chart-meta">
+                                <span class="latest-value" id="tempLatest">—</span>
+                                <span class="status-badge" id="tempStatus">—</span>
+                            </div>
+                        </div>
                         <canvas id="temperatureChart"></canvas>
                     </div>
                     <div class="chart-card">
-                        <h4>💧 Humidity</h4>
+                        <div class="chart-card-header">
+                            <h4>💧 Humidity</h4>
+                            <div class="chart-meta">
+                                <span class="latest-value" id="humidityLatest">—</span>
+                                <span class="status-badge" id="humidityStatus">—</span>
+                            </div>
+                        </div>
                         <canvas id="humidityChart"></canvas>
                     </div>
                     <div class="chart-card">
-                        <h4>☀️ Brightness</h4>
+                        <div class="chart-card-header">
+                            <h4>☀️ Brightness</h4>
+                            <div class="chart-meta">
+                                <span class="latest-value" id="brightnessLatest">—</span>
+                                <span class="status-badge" id="brightnessStatus">—</span>
+                            </div>
+                        </div>
                         <canvas id="brightnessChart"></canvas>
                     </div>
                 </div>

@@ -180,3 +180,128 @@ main {
     color: var(--accent) !important;
 }
 
+/* ── Time range controls ─────────────────── */
+.time-range-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.time-range-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-right: 4px;
+}
+
+.time-btn {
+    padding: 5px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.time-btn:hover {
+    background: var(--surface-alt);
+    color: var(--text);
+}
+
+.time-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.filter-separator {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+    margin: 0 8px;
+}
+
+.location-select {
+    padding: 5px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    outline: none;
+    max-width: 260px;
+}
+
+.location-select:hover,
+.location-select:focus {
+    background: var(--surface-alt);
+    color: var(--text);
+    border-color: var(--accent);
+}
+
+.location-select option {
+    background: var(--surface);
+    color: var(--text);
+}
+
+/* ── Chart card header with status ───────── */
+.chart-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.chart-card-header h4 {
+    margin-bottom: 0;
+}
+
+.chart-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.latest-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Status badges ───────────────────────── */
+.status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--surface-alt);
+    color: var(--text-muted);
+}
+
+.status-normal {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+}
+
+.status-warning {
+    background: rgba(250, 204, 21, 0.15);
+    color: #facc15;
+}
+
+.status-critical {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+
