@@ -125,14 +125,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nLat = parseFloat(noiseLat);
     const nLon = parseFloat(noiseLon);
 
-    const { marker: noiseMarker } = buildMap('noiseMap', nLat, nLon);
+    // Fall back to a default location if the channel has no coordinates
+    const mapLat = isNaN(nLat) ? 51.505 : nLat;
+    const mapLon = isNaN(nLon) ? -0.09 : nLon;
+
+    const { marker: noiseMarker } = buildMap('noiseMap', mapLat, mapLon);
 
     const noiseLocationLabel = document.getElementById('noiseLocationLabel');
     if (noiseLocationLabel) {
         noiseLocationLabel.textContent = 'Resolving location…';
-        const noisePlaceName = await reverseGeocode(noiseLat, noiseLon);
+        const noisePlaceName = await reverseGeocode(mapLat, mapLon);
         noiseLocationLabel.textContent = noisePlaceName;
-        noiseMarker.bindPopup(`<strong>${noisePlaceName}</strong><br>${nLat.toFixed(4)}, ${nLon.toFixed(4)}`).openPopup();
+        noiseMarker.bindPopup(`<strong>${noisePlaceName}</strong><br>${mapLat.toFixed(4)}, ${mapLon.toFixed(4)}`).openPopup();
     }
 
     createChart(
