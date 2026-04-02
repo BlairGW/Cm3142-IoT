@@ -4,6 +4,179 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
+:root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface-alt: #22263a;
+    --border: #2e3250;
+    --accent: #4f8ef7;
+    --accent-2: #a78bfa;
+    --text: #e2e8f0;
+    --text-muted: #8892a4;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
 }
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* ── Header ─────────────────────────────── */
+.site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+.site-header .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+}
+
+.site-header .logo span {
+    color: var(--text);
+}
+
+/* ── Main layout ─────────────────────────── */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* ── Section cards ───────────────────────── */
+.section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.section-header {
+    padding: 20px 28px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-alt);
+}
+
+.section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-header h2 .icon {
+    font-size: 1.2rem;
+}
+
+.section-header .location-label {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    min-height: 1.2em;
+}
+
+.section-body {
+    padding: 24px 28px;
+}
+
+/* ── Chart grid ──────────────────────────── */
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.chart-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+}
+
+.chart-card h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+/* ── Placeholder sections ────────────────── */
+.placeholder {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding: 8px 0;
+}
+
+/* ── Skeleton loader ─────────────────────── */
+.skeleton {
+    display: inline-block;
+    width: 240px;
+    height: 14px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--border) 25%, var(--surface-alt) 50%, var(--border) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ── Map card ────────────────────────────── */
+.map-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-card .location-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    min-height: 1.2em;
+}
+
+#sensorMap {
+    flex: 1;
+    min-height: 220px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+/* Dark Leaflet tiles overlay tint */
+.leaflet-tile-pane {
+    filter: brightness(0.75) contrast(1.1) saturate(0.8);
+}
+
+.leaflet-control-attribution {
+    background: var(--surface) !important;
+    color: var(--text-muted) !important;
+    font-size: 0.65rem !important;
+}
+
+.leaflet-control-attribution a {
+    color: var(--accent) !important;
+}
+

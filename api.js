@@ -7,11 +7,11 @@ const THINGSPEAK_API_KEY = 'V07J65T4LJNCP0F6';
  * Fetch all fields from a ThingSpeak channel in a single request
  * @param {number} channelId - The ThingSpeak channel ID
  * @param {number} results - Number of results to return
- * @returns {Promise<{labels: string[], fields: {name: string, values: number[]}[]}>}
+ * @returns {Promise<{labels: string[], fields: {name: string, values: number[]}[], latitude: string, longitude: string}>}
  */
 export async function fetchThingSpeakChannel(channelId, results = 100) {
     try {
-        const url = `${THINGSPEAK_URL}/channels/${channelId}/feeds.json?api_key=${THINGSPEAK_API_KEY}&results=${results}`;
+        const url = `${THINGSPEAK_URL}/channels/${channelId}/feeds.json?api_key=${THINGSPEAK_API_KEY}&results=${results}&location=true`;
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error: ${response.status}`);
@@ -24,10 +24,44 @@ export async function fetchThingSpeakChannel(channelId, results = 100) {
             key,
             values: data.feeds.map(entry => parseFloat(entry[key]))
         }));
-        return { labels, fields, channelName: data.channel.name };
+
+        // Get lat/lon from the most recent feed entry that has them
+        const latestWithLocation = [...data.feeds].reverse().find(e => e.latitude && e.longitude);
+        const latitude = latestWithLocation?.latitude ?? data.channel.latitude;
+        const longitude = latestWithLocation?.longitude ?? data.channel.longitude;
+
+        return { labels, fields, channelName: data.channel.name, latitude, longitude };
     } catch (error) {
         console.error('Error fetching ThingSpeak channel data:', error);
         throw error;
+    }
+}
+
+/**
+ * Reverse geocode lat/lon to a human-readable place name using Nominatim
+ * @param {string|number} latitude
+ * @param {string|number} longitude
+ * @returns {Promise<string>} - Place name or fallback coordinate string
+ */
+export async function reverseGeocode(latitude, longitude) {
+    try {
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+        const response = await fetch(url, {
+            headers: { 'Accept-Language': 'en' }
+        });
+        if (!response.ok) throw new Error(`Geocode error: ${response.status}`);
+        const data = await response.json();
+        const addr = data.address;
+        // Build a short readable label from available address parts
+        const parts = [
+            addr.building || addr.amenity || addr.road,
+            addr.suburb || addr.village || addr.town || addr.city,
+            addr.county || addr.state,
+        ].filter(Boolean);
+        return parts.length > 0 ? parts.join(', ') : data.display_name;
+    } catch (error) {
+        console.warn('Reverse geocode failed, using coordinates:', error);
+        return `${parseFloat(latitude).toFixed(4)}, ${parseFloat(longitude).toFixed(4)}`;
     }
 }
 

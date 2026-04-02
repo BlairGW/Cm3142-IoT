@@ -3,37 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>City Management System</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
-    <h2>City Management System</h2>
+    <header class="site-header">
+        <div class="logo">City<span>Dashboard</span></div>
+    </header>
 
-    <h3>Environmental Sensor Data Visualization</h3>
-    <div style="width: 80%; margin: 40px auto;">
-        <h4>Temperature</h4>
-        <canvas id="temperatureChart"></canvas>
-    </div>
-    <div style="width: 80%; margin: 40px auto;">
-        <h4>Humidity</h4>
-        <canvas id="humidityChart"></canvas>
-    </div>
-    <div style="width: 80%; margin: 40px auto;">
-        <h4>Brightness</h4>
-        <canvas id="brightnessChart"></canvas>
-    </div>
+    <main>
+
+        <!-- Environmental Sensors -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2><span class="icon">🌿</span> Environmental Sensor Data</h2>
+            </div>
+            <div class="section-body">
+                <div class="chart-grid">
+                    <div class="chart-card map-card">
+                        <h4>📍 Sensor Location</h4>
+                        <p class="location-text" id="envLocationLabel"><span class="skeleton"></span></p>
+                        <div id="sensorMap"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h4>🌡 Temperature</h4>
+                        <canvas id="temperatureChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4>💧 Humidity</h4>
+                        <canvas id="humidityChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4>☀️ Brightness</h4>
+                        <canvas id="brightnessChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Noise Pollution -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2><span class="icon">🔊</span> Noise Pollution</h2>
+            </div>
+            <div class="section-body">
+                <p class="placeholder">No data source connected yet.</p>
+            </div>
+        </section>
+
+        <!-- Traffic & Footfall -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2><span class="icon">🚦</span> Traffic &amp; Footfall</h2>
+            </div>
+            <div class="section-body">
+                <p class="placeholder">No data source connected yet.</p>
+            </div>
+        </section>
+
+        <!-- Flood & Weather -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2><span class="icon">🌧</span> Flood &amp; Weather</h2>
+            </div>
+            <div class="section-body">
+                <p class="placeholder">No data source connected yet.</p>
+            </div>
+        </section>
+
+    </main>
 
     <script type="module" src="main.js"></script>
-
-    <h2>Noise Pollution Data Visualization</h2>
-
-    <h2>Traffic and Footfall Data Visualization</h2>
-
-    <h2>Flood and Weather Data Visualization</h2>
-
-
 
 </body>
 </html>
