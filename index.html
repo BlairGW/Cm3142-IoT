@@ -20,9 +20,21 @@
     <main>
 
         <!-- Environmental Sensors -->
-        <section class="section-card">
+        <section class="section-card" id="envSection">
             <div class="section-header">
                 <h2><span class="icon">🌿</span> Environmental Sensor Data</h2>
+                <div class="filter-bar">
+                    <span class="filter-label">Time:</span>
+                    <button class="time-btn active" data-range="all" data-section="env">All</button>
+                    <button class="time-btn" data-range="1h" data-section="env">1h</button>
+                    <button class="time-btn" data-range="24h" data-section="env">24h</button>
+                    <button class="time-btn" data-range="7d" data-section="env">7d</button>
+                    <span class="filter-separator"></span>
+                    <span class="filter-label">Location:</span>
+                    <select id="envLocationSelect" class="location-select">
+                        <option value="all">All Locations</option>
+                    </select>
+                </div>
             </div>
             <div class="section-body">
                 <div class="chart-grid">
@@ -48,9 +60,21 @@
         </section>
 
         <!-- Noise Pollution -->
-        <section class="section-card">
+        <section class="section-card" id="noiseSection">
             <div class="section-header">
                 <h2><span class="icon">🔊</span> Noise Pollution</h2>
+                <div class="filter-bar">
+                    <span class="filter-label">Time:</span>
+                    <button class="time-btn active" data-range="all" data-section="noise">All</button>
+                    <button class="time-btn" data-range="1h" data-section="noise">1h</button>
+                    <button class="time-btn" data-range="24h" data-section="noise">24h</button>
+                    <button class="time-btn" data-range="7d" data-section="noise">7d</button>
+                    <span class="filter-separator"></span>
+                    <span class="filter-label">Location:</span>
+                    <select id="noiseLocationSelect" class="location-select">
+                        <option value="all">All Locations</option>
+                    </select>
+                </div>
             </div>
             <div class="section-body">
                 <div class="chart-grid">

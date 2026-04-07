@@ -13,28 +13,42 @@ const NOISE_API_KEY = 'HHU1G9I05KMWF9ML'; // Replace with your ThingSpeak Read A
  * @param {number} results - Number of results to return
  * @returns {Promise<{labels: string[], fields: {name: string, values: number[]}[], latitude: string, longitude: string}>}
  */
-export async function fetchThingSpeakChannel(channelId, results = 100) {
+export async function fetchThingSpeakChannel(channelId, results = 100, options = {}) {
     try {
-        const url = `${THINGSPEAK_URL}/channels/${channelId}/feeds.json?api_key=${THINGSPEAK_API_KEY}&results=${results}&location=true`;
+        let url = `${THINGSPEAK_URL}/channels/${channelId}/feeds.json?api_key=${THINGSPEAK_API_KEY}&results=${results}&location=true`;
+        if (options.start) url += `&start=${encodeURIComponent(options.start)}`;
+        if (options.end) url += `&end=${encodeURIComponent(options.end)}`;
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error: ${response.status}`);
         }
         const data = await response.json();
-        const labels = data.feeds.map(entry => new Date(entry.created_at).toLocaleTimeString());
         const fieldKeys = Object.keys(data.channel).filter(k => k.startsWith('field'));
+
+        const latestWithLocation = [...data.feeds].reverse().find(e => e.latitude && e.longitude);
+        const latitude = latestWithLocation?.latitude ?? data.channel.latitude;
+        const longitude = latestWithLocation?.longitude ?? data.channel.longitude;
+
+        // Group feeds by location (rounded to ~100m)
+        const locationGroups = {};
+        data.feeds.forEach(entry => {
+            const lat = parseFloat(entry.latitude || data.channel.latitude);
+            const lon = parseFloat(entry.longitude || data.channel.longitude);
+            const locKey = `${lat.toFixed(3)},${lon.toFixed(3)}`;
+            if (!locationGroups[locKey]) {
+                locationGroups[locKey] = { latitude: lat, longitude: lon, feeds: [] };
+            }
+            locationGroups[locKey].feeds.push(entry);
+        });
+
+        const labels = data.feeds.map(entry => new Date(entry.created_at).toLocaleTimeString());
         const fields = fieldKeys.map(key => ({
             name: data.channel[key] || key,
             key,
             values: data.feeds.map(entry => parseFloat(entry[key]))
         }));
 
-        // Get lat/lon from the most recent feed entry that has them
-        const latestWithLocation = [...data.feeds].reverse().find(e => e.latitude && e.longitude);
-        const latitude = latestWithLocation?.latitude ?? data.channel.latitude;
-        const longitude = latestWithLocation?.longitude ?? data.channel.longitude;
-
-        return { labels, fields, channelName: data.channel.name, latitude, longitude };
+        return { labels, fields, channelName: data.channel.name, latitude, longitude, locationGroups, fieldKeys, rawFeeds: data.feeds };
     } catch (error) {
         console.error('Error fetching ThingSpeak channel data:', error);
         throw error;
@@ -53,32 +67,40 @@ export async function fetchThingSpeakChannel(channelId, results = 100) {
  *   longitude: string
  * }>}
  */
-export async function fetchNoisePollutionData(results = 100) {
+export async function fetchNoisePollutionData(results = 100, options = {}) {
     try {
-        const url = `${THINGSPEAK_URL}/channels/${NOISE_CHANNEL_ID}/feeds.json?api_key=${NOISE_API_KEY}&results=${results}&location=true`;
+        let url = `${THINGSPEAK_URL}/channels/${NOISE_CHANNEL_ID}/feeds.json?api_key=${NOISE_API_KEY}&results=${results}&location=true`;
+        if (options.start) url += `&start=${encodeURIComponent(options.start)}`;
+        if (options.end) url += `&end=${encodeURIComponent(options.end)}`;
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error: ${response.status}`);
         }
         const data = await response.json();
 
-        const labels = data.feeds.map(entry =>
-            new Date(entry.created_at).toLocaleTimeString()
-        );
-
-        // field1 = noise level in dB
-        const noiseValues = data.feeds.map(entry => parseFloat(entry.field1));
-
-        // field2 = classification string (Low / Moderate / High) — encode as 1/2/3 for charting
         const classMap = { Low: 1, Moderate: 2, High: 3 };
-        const classValues = data.feeds.map(entry => classMap[entry.field2] ?? null);
 
-        // Get lat/lon from the most recent feed entry that has them
         const latestWithLocation = [...data.feeds].reverse().find(e => e.latitude && e.longitude);
         const latitude = latestWithLocation?.latitude ?? data.channel.latitude;
         const longitude = latestWithLocation?.longitude ?? data.channel.longitude;
 
-        return { labels, noiseValues, classValues, latitude, longitude };
+        // Group feeds by location
+        const locationGroups = {};
+        data.feeds.forEach(entry => {
+            const lat = parseFloat(entry.latitude || data.channel.latitude);
+            const lon = parseFloat(entry.longitude || data.channel.longitude);
+            const locKey = `${lat.toFixed(3)},${lon.toFixed(3)}`;
+            if (!locationGroups[locKey]) {
+                locationGroups[locKey] = { latitude: lat, longitude: lon, feeds: [] };
+            }
+            locationGroups[locKey].feeds.push(entry);
+        });
+
+        const labels = data.feeds.map(entry => new Date(entry.created_at).toLocaleTimeString());
+        const noiseValues = data.feeds.map(entry => parseFloat(entry.field1));
+        const classValues = data.feeds.map(entry => classMap[entry.field2] ?? null);
+
+        return { labels, noiseValues, classValues, latitude, longitude, locationGroups, rawFeeds: data.feeds };
     } catch (error) {
         console.error('Error fetching noise pollution data:', error);
         throw error;
