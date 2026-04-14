@@ -295,6 +295,125 @@ main {
     color: #22c55e;
 }
 
+/* ── Sensor spec dropdowns ───────────────── */
+.sensor-spec {
+    margin-top: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sensor-spec summary {
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--surface);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.15s, background 0.15s;
+    user-select: none;
+}
+
+.sensor-spec summary::before {
+    content: '▸';
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+}
+
+.sensor-spec[open] summary::before {
+    transform: rotate(90deg);
+}
+
+.sensor-spec summary:hover {
+    color: var(--text);
+    background: var(--surface-alt);
+}
+
+.sensor-spec summary::-webkit-details-marker { display: none; }
+
+.spec-body {
+    padding: 14px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+}
+
+.spec-body h5 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 0.76rem;
+}
+
+.spec-table td {
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.spec-table tr:last-child td {
+    border-bottom: none;
+}
+
+.spec-table td:first-child {
+    color: var(--text-muted);
+    white-space: nowrap;
+    width: 45%;
+}
+
+.spec-table td:last-child {
+    color: var(--text);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.spec-limitations {
+    background: rgba(250, 204, 21, 0.06);
+    border: 1px solid rgba(250, 204, 21, 0.15);
+    border-radius: 6px;
+    padding: 10px 12px;
+}
+
+.spec-limitations h6 {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #facc15;
+    margin-bottom: 6px;
+}
+
+.spec-limitations ul {
+    list-style: none;
+    padding: 0;
+}
+
+.spec-limitations li {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    padding: 3px 0 3px 16px;
+    position: relative;
+    line-height: 1.5;
+}
+
+.spec-limitations li::before {
+    content: '•';
+    position: absolute;
+    left: 2px;
+    color: #facc15;
+}
+
+.spec-limitations li strong {
+    color: var(--text);
+}
+
 .status-warning {
     background: rgba(250, 204, 21, 0.15);
     color: #facc15;
@@ -304,5 +423,4 @@ main {
     background: rgba(239, 68, 68, 0.15);
     color: #ef4444;
 }
-
 
