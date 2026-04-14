@@ -53,7 +53,7 @@
                                 <table class="spec-table">
                                     <tr><td>Measurement Range</td><td>−40 °C to +120 °C</td></tr>
                                     <tr><td>Optimal Accuracy Range</td><td>15 °C to 40 °C</td></tr>
-                                    <tr><td>Accuracy</td><td>± 0.5 °C (15–40 °C)</td></tr>
+                                    <tr><td>Accuracy</td><td>± 2.0 °C (0 - 65 °C)</td></tr>
                                     <tr><td>Resolution</td><td>0.016 °C</td></tr>
                                     <tr><td>Output Data Rate</td><td>1 / 7 / 12.5 Hz</td></tr>
                                     <tr><td>Supply Voltage</td><td>1.7 V – 3.6 V</td></tr>
@@ -80,7 +80,7 @@
                                 <table class="spec-table">
                                     <tr><td>Measurement Range</td><td>0 – 100 % rH</td></tr>
                                     <tr><td>Optimal Accuracy Range</td><td>20 – 80 % rH</td></tr>
-                                    <tr><td>Accuracy</td><td>± 3.5 % rH (20–80 % rH)</td></tr>
+                                    <tr><td>Accuracy</td><td>± 4.5 % rH (20–80 % rH)</td></tr>
                                     <tr><td>Resolution</td><td>0.004 % rH</td></tr>
                                     <tr><td>Response Time</td><td>&lt; 4 seconds (63 % step)</td></tr>
                                     <tr><td>Hysteresis</td><td>± 1 % rH</td></tr>
@@ -98,27 +98,27 @@
                         </details>
                     </div>
                     <div class="chart-card">
-                        <h4>☀️ Brightness</h4>
-                        <canvas id="brightnessChart"></canvas>
+                        <h4>🌀 Pressure</h4>
+                        <canvas id="pressureChart"></canvas>
                         <details class="sensor-spec">
                             <summary>Sensor Specifications</summary>
                             <div class="spec-body">
-                                <h5>TCS34725 — RGB Colour &amp; Ambient Light Sensor</h5>
+                                <h5>LPS25H — MEMS Piezoresistive Pressure Sensor</h5>
                                 <table class="spec-table">
-                                    <tr><td>Measurement Range</td><td>0 – 65,535 lux</td></tr>
-                                    <tr><td>Dynamic Range</td><td>1,000,000 : 1</td></tr>
-                                    <tr><td>IR Blocking Filter</td><td>Integrated</td></tr>
-                                    <tr><td>Integration Time</td><td>2.4 ms – 614 ms (configurable)</td></tr>
-                                    <tr><td>Interface</td><td>I²C (400 kHz)</td></tr>
-                                    <tr><td>Supply Voltage</td><td>2.7 V – 3.6 V</td></tr>
+                                    <tr><td>Measurement Range</td><td>260 – 1260 hPa</td></tr>
+                                    <tr><td>Absolute Accuracy</td><td>± 0.2 hPa</td></tr>
+                                    <tr><td>Relative Accuracy</td><td>± 0.1 hPa</td></tr>
+                                    <tr><td>Resolution</td><td>0.0002 hPa (24-bit output)</td></tr>
+                                    <tr><td>Output Data Rate</td><td>1 / 7 / 12.5 / 25 Hz</td></tr>
+                                    <tr><td>Supply Voltage</td><td>1.7 V – 3.6 V</td></tr>
                                 </table>
                                 <div class="spec-limitations">
                                     <h6>⚠ Known Limitations</h6>
                                     <ul>
-                                        <li>Sensor is mounted <strong>under the LED matrix</strong> — readings can be attenuated if LEDs are active.</li>
-                                        <li>Only available on Sense HAT <strong>V2</strong>; V1 boards lack a light sensor entirely.</li>
-                                        <li>Spectral response does not perfectly match the human eye (CIE luminosity curve).</li>
-                                        <li>Enclosure or HAT orientation can block light path, requiring mounting considerations.</li>
+                                        <li>CPU heat from the Pi can cause <strong>thermal drift</strong> of ~0.5 hPa, affecting altitude estimates.</li>
+                                        <li>Readings reflect station-level pressure — <strong>sea-level correction</strong> must be applied manually for weather comparison.</li>
+                                        <li>Rapid temperature changes can cause transient pressure offsets.</li>
+                                        <li>Vent hole on the Sense HAT must remain unobstructed for accurate readings.</li>
                                     </ul>
                                 </div>
                             </div>

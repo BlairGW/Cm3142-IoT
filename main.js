@@ -19,12 +19,12 @@ const ENV_CHART_CONFIGS = [
         yLabel: 'Humidity (%)',
     },
     {
-        canvasId: 'brightnessChart',
+        canvasId: 'pressureChart',
         fieldKey: 'field3',
-        label: 'Brightness',
-        borderColor: 'rgb(255, 205, 86)',
-        backgroundColor: 'rgba(255, 205, 86, 0.2)',
-        yLabel: 'Brightness (lux)',
+        label: 'Pressure',
+        borderColor: 'rgb(34, 197, 94)',
+        backgroundColor: 'rgba(34, 197, 94, 0.2)',
+        yLabel: 'Pressure (hPa)',
     },
 ];
 
